@@ -65,6 +65,14 @@
   .p-embed{ margin-top:16px; max-width:400px; }
   .p-embed .instagram-media{ margin:0 !important; min-width:0 !important; }
   .p-embed iframe{ max-width:100% !important; }
+  .p-photos{ display:flex; flex-wrap:wrap; gap:8px; margin-top:15px; }
+  .p-thumb{ height:150px; width:auto; max-width:100%; border-radius:7px; display:block; cursor:zoom-in;
+    object-fit:cover; transition:opacity .2s ease, transform .2s ease; }
+  .p-thumb:hover{ opacity:.9; transform:translateY(-2px); }
+  .lb{ position:fixed; inset:0; z-index:300; background:rgba(16,13,10,.95); display:none; align-items:center;
+    justify-content:center; padding:28px; cursor:zoom-out; opacity:0; transition:opacity .32s ease; }
+  .lb.open{ display:flex; opacity:1; }
+  .lb img{ max-width:95vw; max-height:92vh; border-radius:4px; box-shadow:0 24px 70px rgba(0,0,0,.55); }
   .fade{ opacity:0; transform:translateY(14px); transition:opacity .9s ease, transform .9s ease; }
   .fade.in{ opacity:1; transform:none; }
   .grid-base,.grid-glow{ position:fixed; inset:0; pointer-events:none; z-index:0;
@@ -97,14 +105,17 @@
       <div class="p-item">
         <span class="p-name">StupidHacks</span>
         <p class="p-desc">a hackathon where the only rule is that your idea has to be stupid. started in 2025, now run in toronto, kingston, ottawa, waterloo, london, singapore, san francisco, and australia. thousands of builders, zero useful software.</p>
+        <div class="p-photos"><img class="p-thumb" src="stupidhacks-1.jpg" data-full="stupidhacks-1.jpg" loading="lazy" alt="StupidHacks"><img class="p-thumb" src="stupidhacks-2.jpg" data-full="stupidhacks-2.jpg" loading="lazy" alt="StupidHacks"></div>
       </div>
       <div class="p-item">
         <a class="p-name" href="https://wakeup.sg/walk-accross-country-sg-50km/" target="_blank" rel="noopener">Walking Across Singapore</a>
         <p class="p-desc">i convinced 50 strangers from the internet to walk 50km across an entire country with me in a single day. it made the news and somehow earned me the title of honorary singaporean. still the most insane thing i've organized.</p>
+        <div class="p-photos"><img class="p-thumb" src="walk.jpg" data-full="walk.jpg" loading="lazy" alt="Walking Across Singapore"></div>
       </div>
       <div class="p-item">
         <span class="p-name">IdeasFest</span>
         <p class="p-desc">singapore's biggest event dedicated entirely to building and shipping, co-organized under fireplace. 400+ builders, creatives, and dreamers in one place. i ran the ideas factory, a workshop where you go from no idea to something actually launched in a few hours.</p>
+        <div class="p-photos"><img class="p-thumb" src="ideasfest-1.jpg" data-full="ideasfest-1.jpg" loading="lazy" alt="IdeasFest"><img class="p-thumb" src="ideasfest-2.jpg" data-full="ideasfest-2.jpg" loading="lazy" alt="IdeasFest"></div>
       </div>
       <div class="p-item">
         <a class="p-name" href="https://www.tiktok.com/@cbctoronto/video/7671419549748612370?_r=1&_t=ZS-98hJ9xNpE2S" target="_blank" rel="noopener">World Record Hide & Seek</a>
@@ -113,6 +124,7 @@
       <div class="p-item">
         <a class="p-name" href="https://www.instagram.com/p/DQ4cqSRja0J/" target="_blank" rel="noopener">Genesis Ventures</a>
         <p class="p-desc">curated gatherings at queen's, from powerpoint nights to long table dinners, made to inspire canada's next generation of builders. it starts with dinner and ends with strangers who won't stop texting each other.</p>
+        <div class="p-photos"><img class="p-thumb" src="genesis.jpg" data-full="genesis.jpg" loading="lazy" alt="Genesis Ventures"></div>
         <div class="p-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DQ4cqSRja0J/" data-instgrm-version="14"></blockquote></div>
       </div>
       <div class="p-item">
@@ -126,6 +138,15 @@
   </div>
   <a class="back" href="index.html">← back home</a>
 </div>
+<div id="lb" class="lb" aria-hidden="true"><img id="lbImg" alt=""></div>
+<script>
+(function(){ const lb=document.getElementById('lb'), img=document.getElementById('lbImg'); if(!lb) return;
+  document.querySelectorAll('.p-thumb').forEach(t=>t.addEventListener('click',()=>{ img.src=t.getAttribute('data-full')||t.src; lb.classList.add('open'); }));
+  const close=()=>{ lb.classList.remove('open'); setTimeout(()=>{ if(!lb.classList.contains('open')) img.src=''; },320); };
+  lb.addEventListener('click', close);
+  addEventListener('keydown', e=>{ if(e.key==='Escape') close(); });
+})();
+</script>
 <script async src="//www.instagram.com/embed.js"></script>
 <div class="grid-base"></div>
 <div class="grid-glow" id="gridGlow"></div>
