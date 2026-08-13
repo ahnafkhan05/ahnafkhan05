@@ -147,6 +147,14 @@
   .social a{ color:var(--muted); text-decoration:underline; text-decoration-color:transparent;
     text-underline-offset:5px; text-decoration-thickness:1.5px; transition:color .2s, text-decoration-color .2s; }
   .social a:hover{ color:var(--text); text-decoration-color:var(--accent); }
+  /* hand-drawn blue highlights that draw in on scroll */
+  .hl{ position:relative; display:inline-block; }
+  .hl .hl-svg{ position:absolute; pointer-events:none; overflow:visible; z-index:2; }
+  .hl .hl-svg path{ fill:none; stroke:var(--accent); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round;
+    vector-effect:non-scaling-stroke; stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset 1s ease; }
+  .hl.drawn .hl-svg path{ stroke-dashoffset:0; }
+  .hl-u .hl-svg{ left:-1px; right:-1px; width:calc(100% + 2px); height:12px; bottom:-9px; }
+  .hl-c .hl-svg{ left:-9px; right:-9px; top:-7px; bottom:-7px; width:calc(100% + 18px); height:calc(100% + 14px); }
 </style>
 </head>
 <body>
@@ -215,16 +223,13 @@
 <!-- the only thing below the fold — an intentional scroll -->
 <section id="about">
   <div class="wrap">
-    <h2>hey, i'm ahnaf,</h2>
+    <h2>hi, i'm ahnaf.</h2>
     <div class="prose">
-      <p>i really like a good conversation. the kind that stretches much longer than either person expected, usually with someone i didn't know very well before it started.</p>
-      <p>i've had them with random strangers on buses, people in parks, and people in countries halfway across the world, sometimes when we barely speak the same language.</p>
-      <p>i think all of those conversations have given me a pretty deep sense of optimism about the world. people are endlessly interesting. everyone seems to have something they care about, something they're curious about, or some way of seeing the world that i never would have arrived at on my own.</p>
-      <p>the world feels really big to me because of that. full of people i haven't met yet, things i don't understand yet, and ideas i haven't even thought to ask about.</p>
-      <p>i also dream really big. i think a lot of that comes from growing up around people who always made me feel like i was allowed to.</p>
-      <p>right now, i'm trying to become a deeper and more deliberate thinker. to question my first instincts, sit with ideas for longer, and push them further than where they naturally stop. i'm reading a lot more as part of that.</p>
-      <p>i'm also trying to take my health and fitness more seriously, and to love myself as aggressively as possible.</p>
-      <p class="closer">everything i do in life is to have more interesting conversations.</p>
+      <p>my favourite thing in the world is <span class="hl hl-u">talking to people<svg class="hl-svg" viewBox="0 0 200 12" preserveAspectRatio="none"><path pathLength="1" d="M2,8 C40,3 80,11 120,6 C150,3 180,9 198,5"/></svg></span>, often at the expense of my own sleep.</p>
+      <p>i don't really do small talk. i usually go straight to <span class="hl hl-c">the harder questions<svg class="hl-svg" viewBox="0 0 200 60" preserveAspectRatio="none"><path pathLength="1" d="M30,34 C6,20 60,8 120,9 C180,10 198,24 190,38 C182,52 110,54 60,50 C18,46 8,34 26,24"/></svg></span>. all of these conversations have left me with a deep appreciation for how beautiful and enormous the world is.</p>
+      <p>many of my friends describe me as restless and ambitious. i'd add <span class="hl hl-c">silly<svg class="hl-svg" viewBox="0 0 200 60" preserveAspectRatio="none"><path pathLength="1" d="M34,32 C10,18 70,8 118,10 C176,12 196,26 188,40 C180,54 96,54 54,48 C16,43 10,30 30,22"/></svg></span> to that.</p>
+      <p>i spend a lot of time reading about evolutionary psychology, human behaviour, cities, and why we are the way we are. i also love listening to people, wandering around new places, and <span class="hl hl-u">making slightly ridiculous things happen<svg class="hl-svg" viewBox="0 0 200 12" preserveAspectRatio="none"><path pathLength="1" d="M2,7 C46,12 92,3 138,8 C166,11 186,5 198,8"/></svg></span>.</p>
+      <p>currently figuring out how to <span class="hl hl-u">turn conversations into a full-time job<svg class="hl-svg" viewBox="0 0 200 12" preserveAspectRatio="none"><path pathLength="1" d="M2,8 C40,4 80,10 120,6 C150,3 180,9 198,5"/></svg></span>. also training for a triathlon.</p>
     </div>
   </div>
 </section>
@@ -251,6 +256,13 @@
 <script>
 (function(){ var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); })();
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 500);
+/* draw the hand-drawn highlights in as they scroll into view */
+(function(){ const hls=[...document.querySelectorAll('.hl')]; if(!hls.length) return;
+  if(!('IntersectionObserver' in window)){ hls.forEach(h=>h.classList.add('drawn')); return; }
+  const io=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){
+    const el=e.target; setTimeout(()=>el.classList.add('drawn'), hls.indexOf(el)%3*160); io.unobserve(el); } }); }, {threshold:0.7});
+  hls.forEach(h=>io.observe(h));
+})();
 addEventListener('scroll', ()=>{ document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40); }, {passive:true});
 window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), 120+i*100)); });
 
