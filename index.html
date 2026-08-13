@@ -128,33 +128,9 @@
   .cursor-light{ position:fixed; inset:0; pointer-events:none; z-index:3; mix-blend-mode:multiply;
     background:radial-gradient(300px circle at var(--x,-200px) var(--y,-200px),rgba(0,0,0,.06),rgba(0,0,0,.025) 42%,transparent 68%); }
   @media(hover:none){ .cursor-light{ display:none; } }
-
-  /* intro — click to enter (starts the music) */
-  #intro{ position:fixed; inset:0; z-index:200; background:var(--bg); overflow:hidden; transition:opacity 1s ease; }
-  #intro.gone{ opacity:0; pointer-events:none; }
-  @media(hover:hover){ #intro{ cursor:none; } }
-  #introFollow{ position:fixed; left:0; top:0; pointer-events:none; z-index:2; }
-  #introFollow .glow{ position:absolute; left:0; top:0; width:440px; height:440px; margin:-220px 0 0 -220px; border-radius:50%;
-    background:radial-gradient(circle, rgba(0,0,0,.08), rgba(0,0,0,.03) 44%, transparent 66%); }
-  #introFollow .lbl{ position:absolute; left:0; top:60px; transform:translateX(-50%); white-space:nowrap;
-    font-size:19px; letter-spacing:.02em; color:var(--text); }
-  .intro-foot{ position:fixed; left:0; right:0; bottom:34px; z-index:3; display:flex; flex-direction:column; align-items:center; gap:10px; }
-  .intro-foot .sd{ font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); }
-  #introSilent{ background:none; border:none; font:inherit; cursor:pointer; color:var(--muted); font-size:12px;
-    text-decoration:underline; text-decoration-color:transparent; text-underline-offset:4px; transition:color .25s, text-decoration-color .25s; }
-  #introSilent:hover{ color:var(--text); text-decoration-color:var(--accent); }
-  body.intro-lock{ overflow:hidden; }
 </style>
 </head>
-<body class="intro-lock">
-
-<div id="intro">
-  <div id="introFollow"><span class="glow"></span><span class="lbl">click</span></div>
-  <div class="intro-foot">
-    <span class="sd">♪ music will fade in</span>
-    <button id="introSilent">enter without sound</button>
-  </div>
-</div>
+<body>
 
 <svg width="0" height="0" style="position:absolute">
   <defs><filter id="goo">
@@ -270,32 +246,10 @@ window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach
       btn.classList.add('playing'); label.textContent='playing'; rampTo(TARGET);
     }).catch(()=>{});
   }
-  window.__startAmbient = start;
   btn.addEventListener('click', ()=>{
     if(audio.paused) start();
     else { label.textContent='sound'; btn.classList.remove('playing'); rampTo(0, ()=>audio.pause()); }
   });
-})();
-(function(){ const intro=document.getElementById('intro'); if(!intro) return;
-  const unlock=()=>document.body.classList.remove('intro-lock');
-  try{ if(sessionStorage.getItem('entered')==='1'){ intro.remove(); unlock(); return; } }catch(e){}
-  const follow=document.getElementById('introFollow'), lbl=follow.querySelector('.lbl');
-  const touch=matchMedia('(hover:none)').matches;
-  let x=innerWidth/2, y=innerHeight/2;
-  const place=()=>{ follow.style.transform='translate('+x+'px,'+y+'px)'; };
-  place();
-  if(touch){ lbl.textContent='tap to enter'; }
-  else addEventListener('mousemove', e=>{ x=e.clientX; y=e.clientY; place(); }, {passive:true});
-  let done=false;
-  function enter(withSound){ if(done) return; done=true;
-    try{ sessionStorage.setItem('entered','1'); }catch(e){}
-    if(withSound && window.__startAmbient) window.__startAmbient();
-    intro.classList.add('gone'); unlock(); setTimeout(()=>intro.remove(), 1100);
-  }
-  intro.addEventListener('click', ()=>enter(true));
-  addEventListener('keydown', e=>{ if((e.key==='Enter'||e.key===' ') && !done){ e.preventDefault(); enter(true);} });
-  const silent=document.getElementById('introSilent');
-  if(silent) silent.addEventListener('click', e=>{ e.stopPropagation(); enter(false); });
 })();
 (function(){ const wrap=document.getElementById('blackout'), text=document.getElementById('blackoutText'), hint=document.getElementById('blackoutHint');
   const layer=document.createElement('div'); layer.className='ink-layer';
