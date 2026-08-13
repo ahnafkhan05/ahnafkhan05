@@ -266,22 +266,21 @@ window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach
     requestAnimationFrame(loop); })();
 })();
 (function(){ const btn=document.getElementById('musicBtn'), label=document.getElementById('musicLabel'), audio=document.getElementById('ambient');
+  if(!btn||!audio) return;
   const TARGET=0.22, STEP=0.02; let fade=null;
-  function rampTo(vol, done){ clearInterval(fade); fade=setInterval(()=>{
-      const d=vol-audio.volume;
-      if(Math.abs(d)<=STEP){ audio.volume=vol; clearInterval(fade); if(done) done(); }
-      else audio.volume=Math.min(1,Math.max(0, audio.volume + (d>0?STEP:-STEP)));
-    }, 60); }
-  function start(){                          // fade in; only ever called from a user gesture
-    if(!audio.paused) return;
-    audio.volume=0; audio.play().then(()=>{
-      btn.classList.add('playing'); label.textContent='playing'; rampTo(TARGET);
-    }).catch(()=>{});
-  }
-  btn.addEventListener('click', ()=>{
-    if(audio.paused) start();
-    else { label.textContent='sound'; btn.classList.remove('playing'); rampTo(0, ()=>audio.pause()); }
-  });
+  function rampTo(v,done){ clearInterval(fade); fade=setInterval(()=>{ const d=v-audio.volume;
+    if(Math.abs(d)<=STEP){ audio.volume=v; clearInterval(fade); if(done)done(); }
+    else audio.volume=Math.min(1,Math.max(0,audio.volume+(d>0?STEP:-STEP))); },60); }
+  function save(){ try{ sessionStorage.setItem('musicOn', audio.paused?'0':'1'); sessionStorage.setItem('musicTime', String(audio.currentTime||0)); }catch(e){} }
+  function start(resume){ if(!audio.paused) return; audio.volume=0;
+    audio.play().then(()=>{ btn.classList.add('playing'); label.textContent='playing'; rampTo(TARGET); save(); })
+      .catch(()=>{ if(!resume){ label.textContent='tap again'; setTimeout(()=>label.textContent='sound',1400); } }); }
+  function stop(){ label.textContent='sound'; btn.classList.remove('playing'); rampTo(0,()=>{ audio.pause(); save(); }); }
+  btn.addEventListener('click', ()=>{ audio.paused? start(false): stop(); });
+  addEventListener('pagehide', save); addEventListener('beforeunload', save);
+  try{ if(sessionStorage.getItem('musicOn')==='1'){ const t=parseFloat(sessionStorage.getItem('musicTime')||'0');
+    const go=()=>{ try{ if(t>0&&isFinite(t)) audio.currentTime=t; }catch(e){}; start(true); };
+    if(audio.readyState>=1) go(); else audio.addEventListener('loadedmetadata', go, {once:true}); audio.load(); } }catch(e){}
 })();
 </script>
 </body>
