@@ -44,6 +44,13 @@
   .item .body{ display:block; color:var(--muted); font-size:14px; margin-top:9px; max-width:640px; }
   .back{ display:inline-block; padding:26px 0 60px; font-size:14px; color:var(--muted); transition:color .25s; }
   .back:hover{ color:var(--accent); }
+  .lede{ color:var(--muted); font-size:14px; margin:2px 0 24px; max-width:520px; }
+  .people{ max-width:600px; margin-top:2px; font-size:16px; line-height:1.9; color:var(--text); }
+  .person{ white-space:nowrap; }
+  .sep{ color:var(--muted); }
+  a.person{ text-decoration:underline; text-decoration-color:transparent; text-underline-offset:4px;
+    text-decoration-thickness:1.5px; transition:text-decoration-color .2s; }
+  a.person:hover{ text-decoration-color:var(--accent); }
   .fade{ opacity:0; transform:translateY(14px); transition:opacity .9s ease, transform .9s ease; }
   .fade.in{ opacity:1; transform:none; }
   .grid-base,.grid-glow{ position:fixed; inset:0; pointer-events:none; z-index:0;
@@ -60,7 +67,14 @@
 <body>
 <nav id="nav">
   <a href="index.html" class="nav-name">Ahnaf</a>
-  <div class="nav-links"><a href="index.html" class="section-link">home</a></div>
+  <div class="nav-links">
+    <a href="index.html" class="section-link">home</a>
+    <a href="past.html" class="section-link">before</a>
+    <a href="projects.html" class="section-link">projects</a>
+    <a href="questions.html" class="section-link">questions</a>
+    <a href="thanks.html" class="section-link">thank you</a>
+    <a href="index.html#about" class="section-link">about</a>
+  </div>
 </nav>
 <header class="top wrap fade">
   <h1>projects</h1>
