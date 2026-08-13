@@ -53,6 +53,15 @@
   a.person{ text-decoration:underline; text-decoration-color:transparent; text-underline-offset:4px;
     text-decoration-thickness:1.5px; transition:text-decoration-color .2s; }
   a.person:hover{ text-decoration-color:var(--accent); }
+  .p-item{ padding:18px 0; border-bottom:1px solid var(--line); }
+  .p-item:first-child{ border-top:1px solid var(--line); }
+  .p-name{ font-size:17px; color:var(--text); display:inline-block; }
+  a.p-name{ text-decoration:underline; text-decoration-color:transparent; text-underline-offset:5px; text-decoration-thickness:1.5px; transition:text-decoration-color .2s; }
+  a.p-name:hover{ text-decoration-color:var(--accent); }
+  a.p-name::after{ content:" ↗"; color:var(--muted); font-size:12px; }
+  .p-desc{ color:var(--muted); font-size:14px; line-height:1.6; margin-top:7px; max-width:600px; }
+  .p-desc a{ color:var(--text); text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px; transition:text-decoration-color .2s; }
+  .p-desc a:hover{ text-decoration-color:var(--accent); }
   .fade{ opacity:0; transform:translateY(14px); transition:opacity .9s ease, transform .9s ease; }
   .fade.in{ opacity:1; transform:none; }
   .grid-base,.grid-glow{ position:fixed; inset:0; pointer-events:none; z-index:0;
@@ -73,7 +82,6 @@
     <a href="index.html" class="section-link">home</a>
     <a href="past.html" class="section-link">before</a>
     <a href="projects.html" class="section-link">projects</a>
-    <a href="questions.html" class="section-link">questions</a>
     <a href="index.html#about" class="section-link">about</a>
   </div>
 </nav>
@@ -81,27 +89,35 @@
   <h1>projects</h1>
 </header>
 <div class="wrap fade">
-  <!-- EDIT: each item is one project. Point href to that project (a page, repo, or live link). -->
+  <p class="lede">some of the things i've made and put into the world. mostly gatherings — of builders, of strangers, of people who won't stop texting each other after.</p>
   <div class="list">
-      <div class="item">
-        
-        <span class="name">[project name]</span>
-        <span class="desc">[one line on what it is and why it mattered]</span>
+      <div class="p-item">
+        <span class="p-name">StupidHacks</span>
+        <p class="p-desc">a hackathon where the only rule is that your idea has to be stupid. started in 2025, now run in toronto, kingston, ottawa, waterloo, london, singapore, san francisco, and australia. thousands of builders, zero useful software.</p>
       </div>
-      <div class="item">
-        
-        <span class="name">[project name]</span>
-        <span class="desc">[what you built, learned, or what it does]</span>
+      <div class="p-item">
+        <a class="p-name" href="https://wakeup.sg/walk-accross-country-sg-50km/" target="_blank" rel="noopener">Walking Across Singapore</a>
+        <p class="p-desc">i convinced 50 strangers from the internet to walk 50km across an entire country with me in a single day. it made the news and somehow earned me the title of honorary singaporean. still the most insane thing i've organized.</p>
       </div>
-      <div class="item">
-        
-        <span class="name">[project name]</span>
-        <span class="desc">[a short, proud description]</span>
+      <div class="p-item">
+        <span class="p-name">IdeasFest</span>
+        <p class="p-desc">singapore's biggest event dedicated entirely to building and shipping, co-organized under fireplace. 400+ builders, creatives, and dreamers in one place. i ran the ideas factory, a workshop where you go from no idea to something actually launched in a few hours.</p>
       </div>
-      <div class="item">
-        
-        <span class="name">[project name]</span>
-        <span class="desc">[another one — copy a block to add more]</span>
+      <div class="p-item">
+        <a class="p-name" href="https://www.tiktok.com/@cbctoronto/video/7671419549748612370?_r=1&_t=ZS-98hJ9xNpE2S" target="_blank" rel="noopener">World Record Hide & Seek</a>
+        <p class="p-desc">200+ people playing hide-and-seek across the toronto islands, for charity. permits, insurance, ferry schedules, and a children's breakfast fundraiser. cbc toronto sent a camera crew, which felt absurd for a children's game.</p>
+      </div>
+      <div class="p-item">
+        <span class="p-name">Genesis Ventures</span>
+        <p class="p-desc">queen's puts on highly curated events — powerpoint nights, long table dinners — to inspire the next generation of canada's builders. it starts with dinner and ends with strangers who won't stop texting each other.</p>
+      </div>
+      <div class="p-item">
+        <a class="p-name" href="https://socratica.info/" target="_blank" rel="noopener">Socratica</a>
+        <p class="p-desc">a community for people who make things, built around sessions where everyone sits down and works on their own stuff in the same room. i host meraki, the toronto node, and <a href="https://www.id8.place/" target="_blank" rel="noopener">id8</a>, the queen's node.</p>
+      </div>
+      <div class="p-item">
+        <span class="p-name">Policy Hackathon</span>
+        <p class="p-desc">the first policy hackathon ever run in canada, built from scratch in under two months with no template and no money.</p>
       </div>
   </div>
   <a class="back" href="index.html">← back home</a>
