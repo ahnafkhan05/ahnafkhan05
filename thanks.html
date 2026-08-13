@@ -102,6 +102,8 @@
   .cursor-light{ position:fixed; inset:0; pointer-events:none; z-index:3; mix-blend-mode:multiply;
     background:radial-gradient(300px circle at var(--x,-200px) var(--y,-200px),rgba(0,0,0,.06),rgba(0,0,0,.025) 42%,transparent 68%); }
   @media(hover:none){ .cursor-light{ display:none; } }
+  .bird{ position:fixed; top:0; left:0; z-index:0; pointer-events:none; white-space:pre; line-height:1;
+    font-family:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace; color:rgba(25,23,18,.2); will-change:transform; }
 </style>
 </head>
 <body>
@@ -151,6 +153,23 @@
 })();
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 400);
 addEventListener('scroll', ()=>{ document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40); }, {passive:true});
+(function(){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const FR=['\v/','-v-','/v\','-v-'];
+  function bird(){ const el=document.createElement('div'); el.className='bird';
+    const dir=Math.random()<0.5?1:-1; el.style.fontSize=(12+Math.random()*9)+'px';
+    const y0=44+Math.random()*(innerHeight*0.6); const sp=(28+Math.random()*46)*dir; let x=dir>0?-90:innerWidth+90;
+    const amp=5+Math.random()*11, fr=0.5+Math.random()*0.7, ph=Math.random()*6.28;
+    let last=performance.now(), t=0, ft=0, fi=0; el.textContent=FR[0]; document.body.appendChild(el);
+    (function step(now){ const dt=Math.min(0.05,(now-last)/1000); last=now; t+=dt; ft+=dt; x+=sp*dt;
+      const y=y0+Math.sin(t*fr*6.28+ph)*amp;
+      el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)'+(dir<0?' scaleX(-1)':'');
+      if(ft>0.22){ ft=0; fi=(fi+1)%FR.length; el.textContent=FR[fi]; }
+      if((dir>0&&x>innerWidth+120)||(dir<0&&x<-120)){ el.remove(); return; }
+      requestAnimationFrame(step); })(last); }
+  function loop(){ bird(); if(Math.random()<0.4) setTimeout(bird,500+Math.random()*900);
+    setTimeout(loop, 6000+Math.random()*13000); }
+  setTimeout(loop, 2500);
+})();
 window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), 120+i*90)); });
 (function(){ if(window.matchMedia('(hover:none)').matches) return;
   const glow=document.getElementById('gridGlow'), light=document.getElementById('cursorLight');
