@@ -44,12 +44,11 @@
   .item .body{ display:block; color:var(--muted); font-size:14px; margin-top:9px; max-width:640px; }
   .back{ display:inline-block; padding:26px 0 60px; font-size:14px; color:var(--muted); transition:color .25s; }
   .back:hover{ color:var(--accent); }
-  .lede{ color:var(--muted); font-size:14px; margin:2px 0 26px; max-width:520px; }
-  .people{ display:flex; flex-direction:column; margin-top:2px; }
-  .person{ display:block; padding:8px 0; font-size:16px; color:var(--text);
-    border-bottom:1px solid var(--line); }
-  .person:last-child{ border-bottom:none; }
-  a.person{ text-decoration:underline; text-decoration-color:transparent; text-underline-offset:5px;
+  .lede{ color:var(--muted); font-size:14px; margin:2px 0 24px; max-width:520px; }
+  .people{ max-width:600px; margin-top:2px; font-size:16px; line-height:1.9; color:var(--text); }
+  .person{ white-space:nowrap; }
+  .sep{ color:var(--muted); }
+  a.person{ text-decoration:underline; text-decoration-color:transparent; text-underline-offset:4px;
     text-decoration-thickness:1.5px; transition:text-decoration-color .2s; }
   a.person:hover{ text-decoration-color:var(--accent); }
   .fade{ opacity:0; transform:translateY(14px); transition:opacity .9s ease, transform .9s ease; }
@@ -76,18 +75,7 @@
 <div class="wrap fade">
   <p class="lede">the people who shaped how i think, and who i am. a running list — more to come.</p>
   <div class="people">
-      <a class="person" href="https://www.linkedin.com/in/ella-schlaghecke/" target="_blank" rel="noopener">ella</a>
-      <span class="person">matthew</span>
-      <span class="person">nicole</span>
-      <span class="person">riya</span>
-      <span class="person">shahani</span>
-      <span class="person">kaitlyn</span>
-      <span class="person">sadit</span>
-      <span class="person">ayman</span>
-      <span class="person">conrad and lyn</span>
-      <span class="person">kelly</span>
-      <span class="person">kasai</span>
-      <span class="person">mutammim</span>
+<a class="person" href="https://www.linkedin.com/in/ella-schlaghecke/" target="_blank" rel="noopener">ella schlaghecke</a><span class="sep"> · </span><span class="person">matthew kuo</span><span class="sep"> · </span><span class="person">nicole son</span><span class="sep"> · </span><span class="person">riya</span><span class="sep"> · </span><span class="person">shahani</span><span class="sep"> · </span><span class="person">kaitlyn mcgovern</span><span class="sep"> · </span><span class="person">sadit</span><span class="sep"> · </span><span class="person">ayman</span><span class="sep"> · </span><span class="person">conrad and lyn</span><span class="sep"> · </span><span class="person">kelly dunn</span><span class="sep"> · </span><span class="person">kasai major-browne</span><span class="sep"> · </span><span class="person">mutammim</span><span class="sep"> · </span><span class="person">simarjeet</span><span class="sep"> · </span><span class="person">addi</span><span class="sep"> · </span><span class="person">ezra klein</span><span class="sep"> · </span><span class="person">scott galloway</span><span class="sep"> · </span><span class="person">carl jung</span><span class="sep"> · </span><span class="person">rick riordan</span><span class="sep"> · </span><span class="person">jeff kinney</span><span class="sep"> · </span><span class="person">chris williamson</span><span class="sep"> · </span><span class="person">yuval noah harari</span>
   </div>
   <a class="back" href="index.html">← back home</a>
 </div>
