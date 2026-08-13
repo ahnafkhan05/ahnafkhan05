@@ -193,7 +193,7 @@
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 400);
 addEventListener('scroll', ()=>{ document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40); }, {passive:true});
 (function(){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const FR=['\v/','-v-','/v\','-v-'];
+  const FR=['\\v/','-v-','/v\\','-v-'];
   function bird(){ const el=document.createElement('div'); el.className='bird';
     const dir=Math.random()<0.5?1:-1; el.style.fontSize=(12+Math.random()*9)+'px';
     const y0=44+Math.random()*(innerHeight*0.6); const sp=(28+Math.random()*46)*dir; let x=dir>0?-90:innerWidth+90;
