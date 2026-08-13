@@ -32,16 +32,17 @@
   .nav-links a{ transition:color .25s, text-decoration-color .25s; text-decoration:underline;
     text-decoration-color:transparent; text-underline-offset:5px; text-decoration-thickness:1.5px; }
   .nav-links a:hover{ color:var(--text); text-decoration-color:var(--accent); }
-  header.top{ padding:140px 0 26px; }
+  header.top{ padding:116px 0 14px; }
   header.top h1{ font-weight:500; font-size:clamp(19px,2.1vw,24px); letter-spacing:-.01em; }
-  .list{ margin:22px 0 0; }
-  .item{ display:block; padding:28px 0; }
+  .list{ margin:8px 0 0; }
+  .item{ display:block; padding:10px 0; }
   .item .name{ font-size:17px; color:var(--text); text-decoration:underline; text-decoration-color:transparent;
     text-underline-offset:5px; text-decoration-thickness:1.5px; transition:text-decoration-color .2s; }
   a.item:hover .name{ text-decoration-color:var(--accent); }
-  .item .desc{ display:block; color:var(--muted); font-size:13.5px; margin-top:5px; }
+  .item .date{ display:block; font-family:"Space Mono", monospace; font-size:11px; letter-spacing:.06em; color:var(--muted); margin-bottom:4px; }
+  .item .desc{ display:block; color:var(--muted); font-size:13.5px; margin-top:3px; }
   .item .body{ display:block; color:var(--muted); font-size:14px; margin-top:9px; max-width:640px; }
-  .back{ display:inline-block; padding:44px 0 80px; font-size:14px; color:var(--muted); transition:color .25s; }
+  .back{ display:inline-block; padding:26px 0 60px; font-size:14px; color:var(--muted); transition:color .25s; }
   .back:hover{ color:var(--accent); }
   .fade{ opacity:0; transform:translateY(14px); transition:opacity .9s ease, transform .9s ease; }
   .fade.in{ opacity:1; transform:none; }
@@ -68,48 +69,49 @@
   <!-- EDIT: each item is a past experience — role, company + one short line. Point href to details if any. -->
   <div class="list">
       <a class="item" href="#">
-        <span class="name">Market Intelligence Analyst, Astronomy in Action</span>
-        <span class="desc">built the lead-gen database for a mobile planetarium tour</span>
-      </a>
-      <a class="item" href="#">
+        <span class="date">may – jul 2025</span>
         <span class="name">Community Lead, VSpace</span>
         <span class="desc">organized 20+ events for 400+ people</span>
       </a>
       <a class="item" href="#">
+        <span class="date">dec 2024 – 2025</span>
         <span class="name">Residence Don, Queen's University</span>
-        <span class="desc">ran residence events and looked after 25 students</span>
+        <span class="desc">looked after 25 students and got to watch them grow through their first year at queen's</span>
       </a>
       <a class="item" href="#">
+        <span class="date">sep 2024 – apr 2025</span>
         <span class="name">Production Staff, AMS Media Centre</span>
-        <span class="desc">adobe print production, cut turnaround 25%</span>
+        <span class="desc">learned the difference between a4 and letter paper</span>
       </a>
       <a class="item" href="#">
+        <span class="date">jun 2024 – present</span>
         <span class="name">Operations & Data Lead, Sufia Supermarket</span>
-        <span class="desc">built an excel inventory system for the family grocery store</span>
+        <span class="desc">helped with logistics at my family's grocery store — super proud of my parents for it</span>
       </a>
       <a class="item" href="#">
+        <span class="date">apr – sep 2024</span>
         <span class="name">Captain & Tour Guide, Toronto Harbour Tours</span>
         <span class="desc">youngest-ever guide, captained boats for up to 60 passengers</span>
       </a>
       <a class="item" href="#">
+        <span class="date">apr – sep 2024</span>
         <span class="name">Speaker of Assembly, AMS</span>
-        <span class="desc">chaired the student assembly and moderated its debates</span>
+        <span class="desc">learned to moderate debate in large groups when the passion runs high</span>
       </a>
       <a class="item" href="#">
+        <span class="date">dec 2023 – apr 2024</span>
         <span class="name">Project Assistant, City of Kingston</span>
-        <span class="desc">wrote a feasibility report for Kingston's public market</span>
+        <span class="desc">evaluated the feasibility of a public market for the city of kingston</span>
       </a>
       <a class="item" href="#">
-        <span class="name">First-Year Intern, ASUS</span>
-        <span class="desc">worked on student-government policy</span>
-      </a>
-      <a class="item" href="#">
+        <span class="date">sep 2023 – apr 2024</span>
         <span class="name">First-Year Intern, AMS</span>
-        <span class="desc">worked on ams policy — later became speaker</span>
+        <span class="desc">read a lot of policy documents — my first entry into governance</span>
       </a>
       <a class="item" href="#">
+        <span class="date">oct 2021 – jun 2023</span>
         <span class="name">Recreation Coordinator, PPL Aquatic</span>
-        <span class="desc">ran pool operations for 100+ daily users</span>
+        <span class="desc">bleached way too many of my pants, turned the spa green, and learned pool chemistry</span>
       </a>
   </div>
   <a class="back" href="index.html">← back home</a>
