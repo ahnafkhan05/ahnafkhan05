@@ -148,38 +148,70 @@
     text-underline-offset:5px; text-decoration-thickness:1.5px; transition:color .2s, text-decoration-color .2s; }
   .social a:hover{ color:var(--text); text-decoration-color:var(--accent); }
 
-  /* ── dawn: a sunrise that blooms on load ─────────────────────── */
-  #dawn{ position:fixed; inset:0; z-index:120; pointer-events:none; overflow:hidden; }
+  /* ── sunrise intro: a cinematic dawn on first load ───────────── */
+  #dawn{ position:fixed; inset:0; z-index:200; overflow:hidden; pointer-events:none;
+    animation:dawnExit 1s ease 3.1s forwards; }
   #dawn.done{ display:none; }
-  .dawn-veil{ position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(46,32,20,0) 0%, rgba(38,28,20,.42) 52%, rgba(26,20,15,.66) 100%);
-    animation:dawnVeil 2.9s ease-out forwards; }
-  .dawn-sun{ position:absolute; left:50%; bottom:-6%; width:160vmax; height:160vmax; margin-left:-80vmax; border-radius:50%;
-    background:radial-gradient(circle at 50% 100%, rgba(255,241,212,.95), rgba(255,219,158,.55) 16%, rgba(255,198,132,.24) 32%, transparent 58%);
-    opacity:0; transform:translateY(30%) scale(.6); filter:blur(2px); mix-blend-mode:multiply;
-    animation:dawnSun 3.1s cubic-bezier(.2,.7,.2,1) forwards; }
-  .dawn-rays{ position:absolute; left:50%; bottom:-40%; width:130vmax; height:130vmax; margin-left:-65vmax; transform-origin:50% 100%;
-    background:repeating-conic-gradient(from 180deg at 50% 100%, rgba(255,226,172,.13) 0deg 2.4deg, transparent 2.4deg 13deg);
-    -webkit-mask:radial-gradient(circle at 50% 100%, #000 8%, rgba(0,0,0,.5) 34%, transparent 62%);
-            mask:radial-gradient(circle at 50% 100%, #000 8%, rgba(0,0,0,.5) 34%, transparent 62%);
-    mix-blend-mode:screen; opacity:0; animation:dawnRays 3.3s ease-out forwards; }
-  .dawn-mote{ position:absolute; bottom:-12px; border-radius:50%;
-    background:radial-gradient(circle, rgba(255,232,186,.95), transparent 70%);
-    opacity:0; animation:dawnMote var(--d,6s) ease-in forwards; }
-  @keyframes dawnVeil{ 0%{opacity:1} 100%{opacity:0} }
-  @keyframes dawnSun{ 0%{opacity:0; transform:translateY(30%) scale(.6)} 42%{opacity:.95} 100%{opacity:.22; transform:translateY(0) scale(1)} }
-  @keyframes dawnRays{ 0%{opacity:0; transform:scale(.82)} 45%{opacity:1} 100%{opacity:0; transform:scale(1.12)} }
-  @keyframes dawnMote{ 0%{opacity:0; transform:translateY(0)} 18%{opacity:.9} 100%{opacity:0; transform:translateY(-78vh)} }
+  #dawn > *{ position:absolute; }
+  .sky{ inset:0; }
+  .sky-night{ background:linear-gradient(to bottom,#0d1030 0%,#241a3e 52%,#40264a 100%); animation:skyNight 3.6s ease forwards; }
+  .sky-dawn{ background:linear-gradient(to bottom,#3a2f7a 0%,#c14a86 34%,#ff7a45 66%,#ffc06a 100%); opacity:0; animation:skyDawn 3.6s ease forwards; }
+  .sky-day{ background:linear-gradient(to bottom,#f1ede8 0%,#f6efe4 55%,#ffe6c8 100%); opacity:0; animation:skyDay 3.6s ease forwards; }
+  .stars{ inset:0; animation:starsOut 2.4s ease forwards;
+    background-image:radial-gradient(1.4px 1.4px at 18% 26%,#fff,transparent),radial-gradient(1px 1px at 62% 18%,#fff,transparent),radial-gradient(1.6px 1.6px at 82% 36%,#fff,transparent),radial-gradient(1px 1px at 33% 12%,#fff,transparent),radial-gradient(1.2px 1.2px at 72% 52%,#fff,transparent),radial-gradient(1px 1px at 46% 40%,#fff,transparent),radial-gradient(1.3px 1.3px at 90% 22%,#fff,transparent),radial-gradient(1px 1px at 8% 44%,#fff,transparent); }
+  .rays-wrap{ left:50%; bottom:34%; width:1600px; height:1600px; margin-left:-800px; margin-bottom:-800px;
+    opacity:0; transform:scale(.35); mix-blend-mode:screen; animation:raysIn 3.6s ease forwards; }
+  .rays{ inset:0; border-radius:50%; animation:raysSpin 40s linear infinite;
+    background:repeating-conic-gradient(from 0deg, rgba(255,214,150,.18) 0deg 2.6deg, transparent 2.6deg 15deg); }
+  .sun{ left:50%; bottom:34%; width:230px; height:230px; margin-left:-115px; border-radius:50%;
+    background:radial-gradient(circle,#fff7e4 0%,#ffd472 32%,#ff9c3e 58%,rgba(255,140,56,0) 72%);
+    box-shadow:0 0 140px 70px rgba(255,158,72,.55); opacity:0; transform:translateY(65%) scale(.5);
+    animation:sunRise 3.6s cubic-bezier(.2,.62,.24,1) forwards; }
+  .hills{ left:0; right:0; bottom:0; width:100%; height:44vh; }
+  .hill-back{ fill:#8f5568; opacity:0; animation:hillIn 3.6s ease .05s forwards; }
+  .hill-mid{ fill:#623a50; opacity:0; animation:hillIn 3.6s ease .14s forwards; }
+  .hill-front{ fill:#3c2537; opacity:0; animation:hillIn 3.6s ease .22s forwards; }
+  .bird{ color:#3a2434; opacity:0; }
+  .bird svg{ display:block; width:26px; height:13px; }
+  .ember{ bottom:20%; border-radius:50%; background:radial-gradient(circle,rgba(255,214,150,.95),transparent 70%); opacity:0; animation:ember var(--d,4s) ease-out forwards; }
+  .burst{ inset:0; transform-origin:50% 66%; opacity:0; transform:scale(.35);
+    background:radial-gradient(circle at 50% 66%, rgba(255,255,255,.98) 0%, rgba(255,206,142,.75) 22%, rgba(255,150,80,0) 54%);
+    animation:burst 3.6s ease forwards; }
+  @keyframes skyNight{ 0%{opacity:1} 38%{opacity:.5} 56%{opacity:0} 100%{opacity:0} }
+  @keyframes skyDawn{ 0%{opacity:0} 20%{opacity:.5} 48%{opacity:1} 68%{opacity:.9} 100%{opacity:0} }
+  @keyframes skyDay{ 0%{opacity:0} 62%{opacity:0} 86%{opacity:1} 100%{opacity:1} }
+  @keyframes starsOut{ 0%{opacity:.85} 45%{opacity:.35} 75%{opacity:0} 100%{opacity:0} }
+  @keyframes sunRise{ 0%{opacity:0; transform:translateY(65%) scale(.5)} 22%{opacity:1} 56%{opacity:1; transform:translateY(0) scale(1)} 72%{opacity:1; transform:translateY(-6%) scale(1.28)} 100%{opacity:0; transform:translateY(-12%) scale(1.55)} }
+  @keyframes raysIn{ 0%{opacity:0; transform:scale(.35)} 38%{opacity:.55} 64%{opacity:.9; transform:scale(1)} 100%{opacity:0; transform:scale(1.25)} }
+  @keyframes raysSpin{ to{ transform:rotate(360deg) } }
+  @keyframes hillIn{ 0%{opacity:0; transform:translateY(26px)} 30%{opacity:1} 82%{opacity:1; transform:translateY(0)} 100%{opacity:0} }
+  @keyframes birdFly{ 0%{opacity:0; transform:translate(0,0)} 16%{opacity:.9} 84%{opacity:.9} 100%{opacity:0; transform:translate(72vw,-15vh)} }
+  @keyframes ember{ 0%{opacity:0; transform:translateY(0)} 25%{opacity:.9} 100%{opacity:0; transform:translateY(-72vh)} }
+  @keyframes burst{ 0%{opacity:0; transform:scale(.35)} 58%{opacity:0} 72%{opacity:.96; transform:scale(1)} 100%{opacity:0; transform:scale(1.7)} }
+  @keyframes dawnExit{ 0%{opacity:1} 100%{opacity:0} }
   @media(prefers-reduced-motion:reduce){ #dawn{ display:none; } }
 </style>
 </head>
 <body>
 
 <div id="dawn" aria-hidden="true">
-  <div class="dawn-veil"></div>
-  <div class="dawn-sun"></div>
-  <div class="dawn-rays"></div>
-  <div class="dawn-motes" id="dawnMotes"></div>
+  <div class="sky sky-night"></div>
+  <div class="sky sky-dawn"></div>
+  <div class="sky sky-day"></div>
+  <div class="stars"></div>
+  <div class="rays-wrap"><div class="rays"></div></div>
+  <div class="sun"></div>
+  <svg class="hills" viewBox="0 0 1440 400" preserveAspectRatio="none">
+    <path class="hill hill-back" d="M0,214 C220,150 430,196 660,176 C900,155 1120,206 1440,168 L1440,400 L0,400 Z"/>
+    <path class="hill hill-mid" d="M0,276 C260,224 520,268 760,246 C1010,224 1240,272 1440,250 L1440,400 L0,400 Z"/>
+    <path class="hill hill-front" d="M0,330 C230,300 520,332 780,314 C1050,296 1260,332 1440,318 L1440,400 L0,400 Z"/>
+  </svg>
+  <span class="bird" style="left:12%;top:26%;animation:birdFly 3s ease .5s forwards"><svg viewBox="0 0 24 12"><path d="M1 8 Q6 1.5 12 6 Q18 1.5 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+  <span class="bird" style="left:8%;top:34%;animation:birdFly 3.2s ease .8s forwards"><svg viewBox="0 0 24 12"><path d="M1 8 Q6 1.5 12 6 Q18 1.5 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+  <span class="bird" style="left:16%;top:20%;animation:birdFly 2.8s ease 1s forwards"><svg viewBox="0 0 24 12"><path d="M1 8 Q6 1.5 12 6 Q18 1.5 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+  <span class="bird" style="left:6%;top:29%;animation:birdFly 3.1s ease 1.25s forwards"><svg viewBox="0 0 24 12"><path d="M1 8 Q6 1.5 12 6 Q18 1.5 23 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+  <div class="embers" id="embers"></div>
+  <div class="burst"></div>
 </div>
 
 <svg width="0" height="0" style="position:absolute">
@@ -288,12 +320,12 @@
   let seen=false; try{ seen=sessionStorage.getItem('dawn')==='1'; }catch(e){}
   if(reduce || seen){ dawn.remove(); return; }
   try{ sessionStorage.setItem('dawn','1'); }catch(e){}
-  const box=document.getElementById('dawnMotes');
-  for(let i=0;i<15;i++){ const b=document.createElement('span'); b.className='dawn-mote';
-    const sz=3+(i%3); b.style.width=sz+'px'; b.style.height=sz+'px';
-    b.style.left=(5+(i*37)%90)+'%'; b.style.setProperty('--d',(4.4+(i%5)*0.5)+'s');
-    b.style.animationDelay=(0.2+i*0.14)+'s'; box.appendChild(b); }
-  setTimeout(()=>dawn.classList.add('done'), 3500);
+  const box=document.getElementById('embers');
+  for(let i=0;i<22;i++){ const b=document.createElement('span'); b.className='ember';
+    const sz=2+(i%4); b.style.width=sz+'px'; b.style.height=sz+'px';
+    b.style.left=(4+(i*41)%92)+'%'; b.style.setProperty('--d',(3.4+(i%5)*0.45)+'s');
+    b.style.animationDelay=(1.2+i*0.06)+'s'; box.appendChild(b); }
+  setTimeout(()=>dawn.classList.add('done'), 4200);
 })();
 (function(){ var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); })();
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 500);
