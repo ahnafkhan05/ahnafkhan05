@@ -34,6 +34,15 @@
   .nav-links a{ transition:color .25s, text-decoration-color .25s; text-decoration:underline;
     text-decoration-color:transparent; text-underline-offset:5px; text-decoration-thickness:1.5px; }
   .nav-links a:hover{ color:var(--text); text-decoration-color:var(--accent); }
+  .music-btn{ display:inline-flex; align-items:center; gap:8px; cursor:pointer; border:1px solid var(--line);
+    border-radius:999px; padding:6px 12px; font-size:12px; color:var(--muted); background:transparent; transition:.25s; }
+  .music-btn:hover{ color:var(--text); border-color:var(--accent); }
+  .music-btn .bars{ display:inline-flex; gap:2px; align-items:flex-end; height:12px; }
+  .music-btn .bars i{ width:2px; background:var(--accent); height:4px; border-radius:2px; transition:height .2s; }
+  .music-btn.playing .bars i{ animation:eq .9s ease-in-out infinite; }
+  .music-btn.playing .bars i:nth-child(2){ animation-delay:.15s; }
+  .music-btn.playing .bars i:nth-child(3){ animation-delay:.3s; }
+  @keyframes eq{ 0%,100%{height:4px} 50%{height:12px} }
   header.top{ padding:116px 0 14px; }
   header.top h1{ font-family:"Inter",sans-serif; font-weight:400; font-size:clamp(19px,2.1vw,24px); letter-spacing:-.01em; }
   .list{ margin:8px 0 0; }
@@ -62,9 +71,13 @@
   .p-desc{ color:var(--muted); font-size:14px; line-height:1.6; margin-top:7px; max-width:600px; }
   .p-desc a{ color:var(--text); text-decoration:underline; text-decoration-color:var(--line); text-underline-offset:3px; transition:text-decoration-color .2s; }
   .p-desc a:hover{ text-decoration-color:var(--accent); }
-  .p-embed{ margin-top:16px; max-width:400px; }
+  .p-embed{ margin-top:16px; max-width:340px; }
   .p-embed .instagram-media{ margin:0 !important; min-width:0 !important; }
   .p-embed iframe{ max-width:100% !important; }
+  .p-media{ display:flex; flex-wrap:wrap; gap:16px; align-items:flex-start; margin-top:18px; width:min(780px, calc(100vw - 56px)); }
+  .p-media .p-gallery{ margin-top:0; flex:1 1 300px; min-width:0; }
+  .p-media .p-embed{ margin-top:0; flex:0 0 326px; max-width:340px; }
+  .p-media .p-thumb{ height:clamp(240px,30vw,360px); }
   /* horizontal scroll-through gallery: bigger images, snap as you scroll */
   .p-gallery{ display:flex; gap:14px; margin-top:18px; overflow-x:auto; scroll-snap-type:x mandatory;
     -webkit-overflow-scrolling:touch; padding-bottom:10px; scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
@@ -99,6 +112,9 @@
     <a href="past.html" class="section-link">before</a>
     <a href="projects.html" class="section-link">projects</a>
     <a href="index.html#about" class="section-link">about</a>
+    <button class="music-btn" id="musicBtn" aria-label="Toggle ambient music">
+      <span class="bars"><i></i><i></i><i></i></span><span id="musicLabel">sound</span>
+    </button>
   </div>
 </nav>
 <header class="top wrap fade">
@@ -108,12 +124,12 @@
   <!-- EDIT: each item is a past experience — role, company + one short line. Point href to details if any. -->
   <div class="list">
       <div class="item">
-        <span class="date">may – dec 2025</span>
+        <span class="date">may – jul 2025</span>
         <span class="name">Community Lead, VSpace</span>
         <span class="desc">organized 20+ events for 400+ people</span>
       </div>
       <div class="item">
-        <span class="date">dec 2024 – 2025</span>
+        <span class="date">dec 2024 – dec 2025</span>
         <span class="name">Residence Don, Queen's University</span>
         <span class="desc">looked after 25 students and got to watch them grow through their first year at queen's</span>
       </div>
@@ -155,10 +171,28 @@
   </div>
   <a class="back" href="index.html">← back home</a>
 </div>
+<audio id="ambient" loop preload="none"><source src="good-days.mp3" type="audio/mpeg"></audio>
 <div class="grid-base"></div>
 <div class="grid-glow" id="gridGlow"></div>
 <div class="cursor-light" id="cursorLight"></div>
 <script>
+(function(){ const btn=document.getElementById('musicBtn'), label=document.getElementById('musicLabel'), audio=document.getElementById('ambient');
+  if(!btn||!audio) return;
+  const TARGET=0.22, STEP=0.02; let fade=null;
+  function rampTo(v,done){ clearInterval(fade); fade=setInterval(()=>{ const d=v-audio.volume;
+    if(Math.abs(d)<=STEP){ audio.volume=v; clearInterval(fade); if(done)done(); }
+    else audio.volume=Math.min(1,Math.max(0,audio.volume+(d>0?STEP:-STEP))); },60); }
+  function save(){ try{ sessionStorage.setItem('musicOn', audio.paused?'0':'1'); sessionStorage.setItem('musicTime', String(audio.currentTime||0)); }catch(e){} }
+  function start(resume){ if(!audio.paused) return; audio.volume=0;
+    audio.play().then(()=>{ btn.classList.add('playing'); label.textContent='playing'; rampTo(TARGET); save(); })
+      .catch(()=>{ if(!resume){ label.textContent='tap again'; setTimeout(()=>label.textContent='sound',1400); } }); }
+  function stop(){ label.textContent='sound'; btn.classList.remove('playing'); rampTo(0,()=>{ audio.pause(); save(); }); }
+  btn.addEventListener('click', ()=>{ audio.paused? start(false): stop(); });
+  addEventListener('pagehide', save); addEventListener('beforeunload', save);
+  try{ if(sessionStorage.getItem('musicOn')==='1'){ const t=parseFloat(sessionStorage.getItem('musicTime')||'0');
+    const go=()=>{ try{ if(t>0&&isFinite(t)) audio.currentTime=t; }catch(e){}; start(true); };
+    if(audio.readyState>=1) go(); else audio.addEventListener('loadedmetadata', go, {once:true}); audio.load(); } }catch(e){}
+})();
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 400);
 addEventListener('scroll', ()=>{ document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40); }, {passive:true});
 window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), 120+i*90)); });
