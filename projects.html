@@ -65,10 +65,15 @@
   .p-embed{ margin-top:16px; max-width:400px; }
   .p-embed .instagram-media{ margin:0 !important; min-width:0 !important; }
   .p-embed iframe{ max-width:100% !important; }
-  .p-photos{ display:flex; flex-wrap:wrap; gap:8px; margin-top:15px; }
-  .p-thumb{ height:150px; width:auto; max-width:100%; border-radius:7px; display:block; cursor:zoom-in;
-    object-fit:cover; transition:opacity .2s ease, transform .2s ease; }
-  .p-thumb:hover{ opacity:.9; transform:translateY(-2px); }
+  /* horizontal scroll-through gallery: bigger images, snap as you scroll */
+  .p-gallery{ display:flex; gap:14px; margin-top:18px; overflow-x:auto; scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch; padding-bottom:10px; scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
+  .p-gallery::-webkit-scrollbar{ height:6px; }
+  .p-gallery::-webkit-scrollbar-thumb{ background:var(--line); border-radius:6px; }
+  .p-gallery::-webkit-scrollbar-track{ background:transparent; }
+  .p-thumb{ height:clamp(260px,40vw,420px); width:auto; flex:0 0 auto; border-radius:10px; display:block;
+    cursor:zoom-in; scroll-snap-align:center; transition:opacity .2s ease; }
+  .p-thumb:hover{ opacity:.92; }
   .lb{ position:fixed; inset:0; z-index:300; background:rgba(16,13,10,.95); display:none; align-items:center;
     justify-content:center; padding:28px; cursor:zoom-out; opacity:0; transition:opacity .32s ease; }
   .lb.open{ display:flex; opacity:1; }
@@ -105,26 +110,27 @@
       <div class="p-item">
         <span class="p-name">StupidHacks</span>
         <p class="p-desc">a hackathon where the only rule is that your idea has to be stupid. started in 2025, now run in toronto, kingston, ottawa, waterloo, london, singapore, san francisco, and australia. thousands of builders, zero useful software.</p>
-        <div class="p-photos"><img class="p-thumb" src="stupidhacks-1.jpg" data-full="stupidhacks-1.jpg" loading="lazy" alt="StupidHacks"><img class="p-thumb" src="stupidhacks-2.jpg" data-full="stupidhacks-2.jpg" loading="lazy" alt="StupidHacks"></div>
+        <div class="p-gallery"><img class="p-thumb" src="stupidhacks-1.jpg" data-full="stupidhacks-1.jpg" loading="lazy" alt="StupidHacks"><img class="p-thumb" src="stupidhacks-2.jpg" data-full="stupidhacks-2.jpg" loading="lazy" alt="StupidHacks"></div>
       </div>
       <div class="p-item">
         <a class="p-name" href="https://wakeup.sg/walk-accross-country-sg-50km/" target="_blank" rel="noopener">Walking Across Singapore</a>
         <p class="p-desc">i convinced 50 strangers from the internet to walk 50km across an entire country with me in a single day. it <a href="https://wakeup.sg/walk-accross-country-sg-50km/" target="_blank" rel="noopener">made singaporean news as well</a>, and somehow earned me the title of honorary singaporean. still the most insane thing i've organized.</p>
-        <div class="p-photos"><img class="p-thumb" src="walk.jpg" data-full="walk.jpg" loading="lazy" alt="Walking Across Singapore"></div>
+        <div class="p-gallery"><img class="p-thumb" src="walk.jpg" data-full="walk.jpg" loading="lazy" alt="Walking Across Singapore"></div>
       </div>
       <div class="p-item">
         <span class="p-name">IdeasFest</span>
         <p class="p-desc">singapore's biggest event dedicated entirely to building and shipping, co-organized under fireplace. 400+ builders, creatives, and dreamers in one place. i ran the ideas factory, a workshop where you go from no idea to something actually launched in a few hours.</p>
-        <div class="p-photos"><img class="p-thumb" src="ideasfest-1.jpg" data-full="ideasfest-1.jpg" loading="lazy" alt="IdeasFest"><img class="p-thumb" src="ideasfest-2.jpg" data-full="ideasfest-2.jpg" loading="lazy" alt="IdeasFest"></div>
+        <div class="p-gallery"><img class="p-thumb" src="ideasfest-1.jpg" data-full="ideasfest-1.jpg" loading="lazy" alt="IdeasFest"><img class="p-thumb" src="ideasfest-2.jpg" data-full="ideasfest-2.jpg" loading="lazy" alt="IdeasFest"></div>
       </div>
       <div class="p-item">
         <span class="p-name">World Record Hide & Seek</span>
         <p class="p-desc">200+ people playing hide-and-seek across the toronto islands, for charity. was attempting the world record... unfortunately, did not make the cut, but next time for sure! got coverage on <a href="https://www.tiktok.com/@cbctoronto/video/7671419549748612370?_r=1&_t=ZS-98hJ9xNpE2S" target="_blank" rel="noopener">cbc</a> and <a href="https://nowtoronto.com/news/toronto-hide-and-seek-world-record/" target="_blank" rel="noopener">now toronto</a>.</p>
+        <div class="p-gallery"><img class="p-thumb" src="hideandseek.jpg" data-full="hideandseek.jpg" loading="lazy" alt="World Record Hide & Seek"></div>
       </div>
       <div class="p-item">
         <a class="p-name" href="https://www.instagram.com/p/DQ4cqSRja0J/" target="_blank" rel="noopener">Genesis Ventures</a>
         <p class="p-desc">curated gatherings at queen's, from powerpoint nights to long table dinners, made to inspire canada's next generation of builders. it starts with dinner and ends with strangers who won't stop texting each other.</p>
-        <div class="p-photos"><img class="p-thumb" src="genesis.jpg" data-full="genesis.jpg" loading="lazy" alt="Genesis Ventures"></div>
+        <div class="p-gallery"><img class="p-thumb" src="genesis.jpg" data-full="genesis.jpg" loading="lazy" alt="Genesis Ventures"></div>
         <div class="p-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DQ4cqSRja0J/" data-instgrm-version="14"></blockquote></div>
       </div>
       <div class="p-item">
