@@ -221,7 +221,12 @@
       <!-- EDIT: the words in <span class="lit"> stay lit — together they spell your secret message. -->
       <p class="blackout-text" id="blackoutText">for all its noise, <span class="lit">the</span> <span class="lit">world</span> <span class="lit">is</span> young <span class="lit">still</span>, and there is so much left to make — <span class="lit">worth</span> every hour of <span class="lit">your</span> hands and <span class="lit">hope</span>.</p>
     </div>
-    <p class="foot-note">© <span id="year"></span> ahnaf · made with care</p>
+    <div class="social foot-social">
+      <a href="https://www.linkedin.com/in/ahnafkhann/" target="_blank" rel="noopener">linkedin</a>
+      <a href="https://x.com/ahnafkhann" target="_blank" rel="noopener">twitter</a>
+      <a href="https://ahnafkhann.substack.com/" target="_blank" rel="noopener">substack</a>
+      <a href="mailto:ahnaf.khan@queensu.ca">email</a>
+    </div>
   </div>
 </footer>
 
@@ -231,7 +236,7 @@
 <div class="cursor-light" id="cursorLight"></div>
 
 <script>
-document.getElementById('year').textContent = new Date().getFullYear();
+(function(){ var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); })();
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 500);
 addEventListener('scroll', ()=>{ document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40); }, {passive:true});
 window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), 120+i*100)); });
