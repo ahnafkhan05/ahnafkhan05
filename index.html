@@ -111,6 +111,9 @@
   .thanks-list span:hover{ color:var(--accent); }
 
   footer{ padding:60px 0; border-top:1px solid var(--line); }
+  footer .wrap{ max-width:560px; margin:0 auto; text-align:center; }
+  .page-quote{ margin-bottom:36px; }
+  .page-quote p{ font-style:italic; font-size:clamp(15px,1.7vw,18px); line-height:1.6; color:var(--text); max-width:520px; margin:0 auto; }
   .blackout-wrap{ position:relative; }
   .blackout-hint{ font-size:12px; letter-spacing:.15em; text-transform:lowercase; color:var(--muted);
     margin-bottom:16px; display:inline-flex; align-items:center; gap:9px; cursor:pointer; user-select:none; transition:color .25s; }
@@ -231,10 +234,8 @@
 
 <footer>
   <div class="wrap">
-    <div class="blackout-wrap" id="blackout">
-      <div class="blackout-hint" id="blackoutHint"><span class="sq"></span> black it out</div>
-      <!-- EDIT: the words in <span class="lit"> stay lit — together they spell your secret message. -->
-      <p class="blackout-text" id="blackoutText">for all its noise, <span class="lit">the</span> <span class="lit">world</span> <span class="lit">is</span> young <span class="lit">still</span>, and there is so much left to make — <span class="lit">worth</span> every hour of <span class="lit">your</span> hands and <span class="lit">hope</span>.</p>
+    <div class="page-quote">
+      <p>“what an extraordinary thing it is to get to be alive at the same time as everyone else.”</p>
     </div>
     <div class="social foot-social">
       <a href="https://www.linkedin.com/in/ahnafkhann/" target="_blank" rel="noopener">linkedin</a>
@@ -283,15 +284,6 @@ window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach
     if(audio.paused) start();
     else { label.textContent='sound'; btn.classList.remove('playing'); rampTo(0, ()=>audio.pause()); }
   });
-})();
-(function(){ const wrap=document.getElementById('blackout'), text=document.getElementById('blackoutText'), hint=document.getElementById('blackoutHint');
-  const layer=document.createElement('div'); layer.className='ink-layer';
-  for(let i=0;i<26;i++){ const b=document.createElement('b'); const size=60+(i*37%120), left=(i*61%100), top=(i*43%100);
-    b.style.width=size+'px'; b.style.height=size+'px'; b.style.left=left+'%'; b.style.top=top+'%';
-    b.style.marginLeft=(-size/2)+'px'; b.style.marginTop=(-size/2)+'px'; b.style.transitionDelay=(i%8*30)+'ms'; layer.appendChild(b); }
-  text.appendChild(layer);
-  hint.addEventListener('click', ()=>{ wrap.classList.toggle('on');
-    hint.querySelector('span.sq').nextSibling.textContent = wrap.classList.contains('on') ? ' restore' : ' black it out'; });
 })();
 </script>
 </body>
