@@ -212,7 +212,7 @@
   </div>
 </footer>
 
-<audio id="ambient" loop preload="none"><source id="ambientSrc" src="" type="audio/mpeg"></audio>
+<audio id="ambient" loop preload="none"><source id="ambientSrc" src="good-days.mp3" type="audio/mpeg"></audio>
 <div class="grid-base"></div>
 <div class="grid-glow" id="gridGlow"></div>
 <div class="cursor-light" id="cursorLight"></div>
@@ -234,10 +234,22 @@ window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach
     requestAnimationFrame(loop); })();
 })();
 (function(){ const btn=document.getElementById('musicBtn'), label=document.getElementById('musicLabel'), audio=document.getElementById('ambient');
-  btn.addEventListener('click', ()=>{ const t=document.getElementById('ambientSrc').getAttribute('src');
-    if(!t){ label.textContent='add a track'; setTimeout(()=>label.textContent='sound',1400); return; }
-    if(audio.paused){ audio.play(); btn.classList.add('playing'); label.textContent='playing'; }
-    else{ audio.pause(); btn.classList.remove('playing'); label.textContent='sound'; } });
+  const TARGET=0.5, STEP=0.03; let fade=null;
+  function rampTo(vol, done){ clearInterval(fade); fade=setInterval(()=>{
+      const d=vol-audio.volume;
+      if(Math.abs(d)<=STEP){ audio.volume=vol; clearInterval(fade); if(done) done(); }
+      else audio.volume=Math.min(1,Math.max(0, audio.volume + (d>0?STEP:-STEP)));
+    }, 60); }
+  btn.addEventListener('click', ()=>{
+    if(audio.paused){                       // start — never autoplays; only on this click
+      audio.volume=0; audio.play().then(()=>{
+        btn.classList.add('playing'); label.textContent='playing'; rampTo(TARGET);
+      }).catch(()=>{ label.textContent='tap again'; setTimeout(()=>label.textContent='sound',1400); });
+    } else {                                 // stop — fade out, then pause
+      label.textContent='sound'; btn.classList.remove('playing');
+      rampTo(0, ()=>audio.pause());
+    }
+  });
 })();
 (function(){ const wrap=document.getElementById('blackout'), text=document.getElementById('blackoutText'), hint=document.getElementById('blackoutHint');
   const layer=document.createElement('div'); layer.className='ink-layer';
