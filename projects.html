@@ -187,7 +187,7 @@
     audio.play().then(()=>{ btn.classList.add('playing'); label.textContent='playing'; rampTo(TARGET); save(); })
       .catch(()=>{ if(!resume){ label.textContent='tap again'; setTimeout(()=>label.textContent='sound',1400); } }); }
   function stop(){ label.textContent='sound'; btn.classList.remove('playing'); rampTo(0,()=>{ audio.pause(); save(); }); }
-  btn.addEventListener('click', ()=>{ if(window.__bird) window.__bird(true); audio.paused? start(false): stop(); });
+  btn.addEventListener('click', ()=>{ audio.paused? start(false): stop(); });
   addEventListener('pagehide', save); addEventListener('beforeunload', save);
   try{ if(sessionStorage.getItem('musicOn')==='1'){ const t=parseFloat(sessionStorage.getItem('musicTime')||'0');
     const go=()=>{ try{ if(t>0&&isFinite(t)) audio.currentTime=t; }catch(e){}; start(true); };
@@ -195,28 +195,6 @@
 })();
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 400);
 addEventListener('scroll', ()=>{ document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40); }, {passive:true});
-/* detailed ascii birds gliding across */
-(function(){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var FR=[["  :+=:.                                  .:-+-","   -*##*+-:                          .-=**#*=","     .-+###*+=:.                 :-+*###*=:","        .-+*###*+=-.       :--=+*####+=:","           .-=*#####*++*#*#%%%###*+-.","               :==--+##%%%*---==-.","                   :-:..:.","",""],["","","","  ::::...                  :-.          ..::::","  :*####****+++===--::=##*#%%#===+++****####*-","   .===============-+##%%%*---==============:","                   :-:..:.","",""],["","","","                           :-.","                     .=##*#%%+","          ..::::....-*#%%%*--:..::::..","  :-==++***+=-.    :-:..:.       .:=+***++===-.","  :*##*+=:.                          .:-+*###-","   .-:.                                   .-:"]];
-  var NL=String.fromCharCode(10);
-  var FRAMES=FR.map(function(f){return f.join(NL);});
-  var SEQ=[0,1,2,1];
-  function bird(fromBtn){ var el=document.createElement('div'); el.className='bird';
-    var dir=fromBtn?-1:(Math.random()<0.5?1:-1); el.style.fontSize=(fromBtn?9.5:6.5+Math.random()*3.5)+'px'; el.textContent=FRAMES[0];
-    var y0=fromBtn?54:40+Math.random()*(innerHeight*0.55), sp=fromBtn?-58:(24+Math.random()*34)*dir, x=fromBtn?innerWidth-150:(dir>0?-260:innerWidth+260);
-    var amp=6+Math.random()*12, fr=0.35+Math.random()*0.5, ph=Math.random()*6.28;
-    var last=performance.now(), t=0, ft=0, si=0; document.body.appendChild(el);
-    (function step(now){ var dt=Math.min(0.05,(now-last)/1000); last=now; t+=dt; ft+=dt; x+=sp*dt;
-      var y=y0+Math.sin(t*fr*6.28+ph)*amp;
-      el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)'+(dir<0?' scaleX(-1)':'');
-      if(ft>0.2){ ft=0; si=(si+1)%SEQ.length; el.textContent=FRAMES[SEQ[si]]; }
-      if((dir>0&&x>innerWidth+300)||(dir<0&&x<-300)){ el.remove(); return; }
-      requestAnimationFrame(step); })(last);
-  }
-  window.__bird=bird;
-  function loop(){ bird(); setTimeout(loop, 11000+Math.random()*16000); }
-  setTimeout(loop, 3000);
-})();
 window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach((el,i)=>setTimeout(()=>el.classList.add('in'), 120+i*90)); });
 (function(){ if(window.matchMedia('(hover:none)').matches) return;
   const glow=document.getElementById('gridGlow'), light=document.getElementById('cursorLight');
