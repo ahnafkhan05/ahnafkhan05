@@ -156,8 +156,6 @@
   a.hl-link{ cursor:pointer; transition:color .2s; } a.hl-link:hover{ color:var(--accent); }
   .hl-u .hl-svg{ left:-1px; right:-1px; width:calc(100% + 2px); height:12px; bottom:-9px; }
   .hl-c .hl-svg{ left:-9px; right:-9px; top:-7px; bottom:-7px; width:calc(100% + 18px); height:calc(100% + 14px); }
-  .bird{ position:fixed; top:0; left:0; z-index:0; pointer-events:none; white-space:pre; line-height:1;
-    font-family:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace; color:rgba(25,23,18,.42); will-change:transform; }
 </style>
 </head>
 <body>
@@ -251,34 +249,6 @@
 <script>
 (function(){ var y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear(); })();
 setTimeout(()=>document.getElementById('nav').classList.add('show'), 500);
-/* a little bird that flutters in and perches on the name */
-(function(){ if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var REST=["  .-\"-.","  (o o)"," /(   )\\","  ^^ ^^"], FLUT=["\\ .-\"-. /"," ((o o))","  (   )","  ^^ ^^"], NL=String.fromCharCode(10);
-  var name=document.querySelector('.pname'); if(!name) return; var busy=false;
-  function fly(){ if(busy) return; busy=true;
-    var el=document.createElement('div'); el.className='bird'; el.style.fontSize='15px';
-    el.style.zIndex='4'; el.style.color='rgba(25,23,18,.78)'; el.textContent=FLUT.join(NL);
-    document.body.appendChild(el); var bh=el.offsetHeight||58;
-    var r=name.getBoundingClientRect(); var px=r.left+2, py=r.top-bh+9;
-    var x=innerWidth+150, y=py-180, last=performance.now(), ft=0, up=true, phase='in', sit=0, idle=0;
-    function put(){ el.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px)'; } put();
-    (function step(now){ var dt=Math.min(0.05,(now-last)/1000); last=now; ft+=dt;
-      if(phase==='in'){
-        if(ft>0.12){ ft=0; up=!up; el.textContent=(up?FLUT:REST).join(NL); }
-        x+=(px-x)*0.05; y+=(py-y)*0.05+Math.sin(now/130)*0.7;
-        if(Math.abs(x-px)<2.5&&Math.abs(y-py)<3.5){ phase='sit'; x=px; y=py; el.textContent=REST.join(NL); }
-      } else if(phase==='sit'){ sit+=dt; idle+=dt;
-        if(idle>1.5){ idle=0; el.textContent=FLUT.join(NL); setTimeout(function(){ if(phase==='sit') el.textContent=REST.join(NL); },170); }
-        if(sit>4.5){ phase='out'; up=true; ft=1; }
-      } else {
-        if(ft>0.1){ ft=0; up=!up; el.textContent=(up?FLUT:REST).join(NL); }
-        x-=95*dt; y-=80*dt; if(y<-170||x<-190){ el.remove(); busy=false; return; }
-      }
-      put(); requestAnimationFrame(step);
-    })(last);
-  }
-  window.__perch=fly; setTimeout(fly, 2200);
-})();
 /* draw the hand-drawn highlights in as they scroll into view */
 (function(){ const hls=[...document.querySelectorAll('.hl')]; if(!hls.length) return;
   if(!('IntersectionObserver' in window)){ hls.forEach(h=>h.classList.add('drawn')); return; }
@@ -310,7 +280,7 @@ window.addEventListener('load', ()=>{ document.querySelectorAll('.fade').forEach
     audio.play().then(()=>{ btn.classList.add('playing'); label.textContent='playing'; rampTo(TARGET); save(); })
       .catch(()=>{ if(!resume){ label.textContent='tap again'; setTimeout(()=>label.textContent='sound',1400); } }); }
   function stop(){ label.textContent='sound'; btn.classList.remove('playing'); rampTo(0,()=>{ audio.pause(); save(); }); }
-  btn.addEventListener('click', ()=>{ if(window.__perch) window.__perch(); audio.paused? start(false): stop(); });
+  btn.addEventListener('click', ()=>{ audio.paused? start(false): stop(); });
   addEventListener('pagehide', save); addEventListener('beforeunload', save);
   try{ if(sessionStorage.getItem('musicOn')==='1'){ const t=parseFloat(sessionStorage.getItem('musicTime')||'0');
     const go=()=>{ try{ if(t>0&&isFinite(t)) audio.currentTime=t; }catch(e){}; start(true); };
